@@ -5,11 +5,10 @@
 package com.octo.mangaList.service;
 
 import com.octo.mangaList.entity.MangaEntity;
-import com.octo.mangaList.exception.TitleAlreadyExistException;
-import com.octo.mangaList.exception.TitleNotFoundByIdException;
 import com.octo.mangaList.repository.MangaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 /**
  *
@@ -17,24 +16,27 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class MangaService {
-
+    
     @Autowired
     private MangaRepository mangaRepository;
-
-    public MangaEntity getTitleFindById(Long id) throws TitleNotFoundByIdException {
-        MangaEntity manga = mangaRepository.findById(id).get();
-        if (manga == null) {
-            throw new TitleNotFoundByIdException("Not found by id");
-        }
-        return manga;
+    
+    public String main(Model model) {
+        Iterable<MangaEntity> mangas = mangaRepository.findAll();
+        model.addAttribute("mangas", mangas);
+        return "main";}
+    
+    public String addTitlePost(String title, Model model) {
+        MangaEntity manga = new MangaEntity();
+        manga.setTitle(title);
+        mangaRepository.save(manga);
+        return "redirect:/main";
     }
-
-    public MangaEntity addMangaTitle(MangaEntity manga) throws TitleAlreadyExistException {
-        if (mangaRepository.findByTitle(manga.getTitle()) != null) {
-            throw new TitleAlreadyExistException("Title Already Exist");
-        }
-        return mangaRepository.save(manga);
-
+    
+    public String addEpisodes(Long id, int episodes, Model model) {
+        MangaEntity manga = mangaRepository.findById(id).orElseThrow();
+        manga.setEpisodes(manga.getEpisodes() + episodes);
+        mangaRepository.save(manga);
+        return "redirect:/main";
     }
-
+    
 }
