@@ -4,7 +4,7 @@
  */
 package com.octo.mangaList.controller;
 
-import com.octo.mangaList.service.MangaService;
+import com.octo.mangaList.service.AnimeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,32 +18,27 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @author vladmir
  */
 @Controller
-public class MangaController {
+public class AnimeController {
 
     @Autowired
-    private MangaService mangaService;
+    AnimeService animeService;
 
-    @GetMapping("/manga")
+    @GetMapping("/anime")
     public String main(Model model) {
-        mangaService.main(model);
-        return "manga";
+        animeService.main(model);
+        return "anime";
     }
 
-    @GetMapping("/addtitle")
-    public String addTitle(Model model) {
-        return "addtitle";
+    @GetMapping("/anime/{id}")
+    public String details(@PathVariable(value = "id") Long id, Model model) {
+        animeService.details(id, model);
+        return "animedetails";
     }
-
-    @PostMapping("/manga")
-    public String addTitlePost(@RequestParam String title, Model model) {
-        mangaService.addTitlePost(title, model);
-        return "redirect:/manga";
-    }
-
-    @PostMapping("/addepisodes/{id}")
-    public String addEpisodes(@PathVariable(value = "id") Long id, @RequestParam int episodes, Model model) {
-        mangaService.addEpisodes(id, episodes, model);
-        return "redirect:/manga";
+    
+    @PostMapping("/anime")
+    public String addTitlePost(@RequestParam String title, @RequestParam int episodes, Model model) {
+        animeService.addTitle(title,episodes, model);
+        return "redirect:/anime";
     }
 
 }

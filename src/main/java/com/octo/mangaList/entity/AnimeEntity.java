@@ -4,22 +4,26 @@
  */
 package com.octo.mangaList.entity;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 /**
  *
  * @author vladmir
  */
 @Entity
-public class MangaEntity {
-
+public class AnimeEntity {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
-    private int episodes;
+    private int allEpisodes;
+    private int watchedEpisodes;
 
-    public MangaEntity() {
+    public AnimeEntity() {
     }
 
     public Long getId() {
@@ -38,12 +42,22 @@ public class MangaEntity {
         this.title = title;
     }
 
-    public int getEpisodes() {
-        return episodes;
+    public int getAllEpisodes() {
+        return allEpisodes;
     }
 
-    public void setEpisodes(int episodes) {
-        this.episodes = episodes;
+    public void setAllEpisodes(int allEpisodes) {
+        this.allEpisodes = allEpisodes;
     }
 
+    public int getWatchedEpisodes() {
+        return watchedEpisodes;
+    }
+
+    public void setWatchedEpisodes(int watchedEpisodes) {
+        this.watchedEpisodes = watchedEpisodes;
+    }
+    
+    
+    
 }

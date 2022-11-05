@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+    <head> 
+        <title>Getting Started: Serving Web Content</title> 
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
+
+    <body>
+        <header th:insert="blocks/header :: header"></header>
+        <h1>Добавление Тайтла</h1>
+    <form action='/manga/' method="post">
+        <input type="text" name="title" placeholder="Введите тайтл">
+        <button type="submit">Добавить тайтл</button>
+    </form>
+        <ul>
+            <th:block th:each="manga : ${mangas}">
+                <h1 th:text="${manga.title}  + ' Выпусков прочитано ' + ${manga.episodes}"/>
+                <form th:action="'addepisodes/' + ${manga.id}" method="post">
+                    <input type="text" name="episodes" placeholder="Введите количество прочитаных эпизодов">
+                    <button type="submit">Добавить эпизоды</button>
+                </form>
+                <a th:href="@{/main/{id}(id=${manga.id})}">Подробнее</a>
+            </th:block>
+        </ul>
+    </body>
+</html>

@@ -23,20 +23,20 @@ public class MangaService {
     public String main(Model model) {
         Iterable<MangaEntity> mangas = mangaRepository.findAll();
         model.addAttribute("mangas", mangas);
-        return "main";}
+        return "manga";}
     
     public String addTitlePost(String title, Model model) {
         MangaEntity manga = new MangaEntity();
         manga.setTitle(title);
         mangaRepository.save(manga);
-        return "redirect:/main";
+        return "redirect:/manga";
     }
     
     public String addEpisodes(Long id, int episodes, Model model) {
         MangaEntity manga = mangaRepository.findById(id).orElseThrow();
         manga.setEpisodes(manga.getEpisodes() + episodes);
         mangaRepository.save(manga);
-        return "redirect:/main";
+        return "redirect:/manga";
     }
     
 }
