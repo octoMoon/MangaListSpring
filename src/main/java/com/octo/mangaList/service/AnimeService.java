@@ -5,7 +5,9 @@
 package com.octo.mangaList.service;
 
 import com.octo.mangaList.entity.AnimeEntity;
+import com.octo.mangaList.entity.EpisodeEntity;
 import com.octo.mangaList.repository.AnimeRepository;
+import com.octo.mangaList.repository.EpisodeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -21,6 +23,9 @@ public class AnimeService {
 
     @Autowired
     AnimeRepository animeRepository;
+    
+    @Autowired
+    EpisodeRepository episodeRepository;
 
     public String main(Model model) {
         Iterable<AnimeEntity> animes = animeRepository.findAll();
@@ -33,6 +38,13 @@ public class AnimeService {
         anime.setTitle(title);
         anime.setAllEpisodes(episodes);
         animeRepository.save(anime);
+        for(int i =1; i<=episodes; i++){
+            EpisodeEntity episode = new EpisodeEntity();
+            episode.setAnime(anime);
+            episode.setEpisodeNumber(i);
+            episode.setWatched(false);
+            episodeRepository.save(episode);
+        }
         return "redirect:/anime";
     }
 

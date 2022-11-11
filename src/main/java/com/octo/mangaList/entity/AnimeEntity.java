@@ -4,10 +4,13 @@
  */
 package com.octo.mangaList.entity;
 
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -15,13 +18,16 @@ import javax.persistence.Id;
  */
 @Entity
 public class AnimeEntity {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
     private int allEpisodes;
     private int watchedEpisodes;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "anime")
+    private List<EpisodeEntity> episodes;
 
     public AnimeEntity() {
     }
@@ -57,7 +63,5 @@ public class AnimeEntity {
     public void setWatchedEpisodes(int watchedEpisodes) {
         this.watchedEpisodes = watchedEpisodes;
     }
-    
-    
-    
+
 }
