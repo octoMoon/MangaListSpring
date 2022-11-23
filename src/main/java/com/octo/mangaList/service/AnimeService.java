@@ -8,9 +8,11 @@ import com.octo.mangaList.entity.AnimeEntity;
 import com.octo.mangaList.entity.EpisodeEntity;
 import com.octo.mangaList.repository.AnimeRepository;
 import com.octo.mangaList.repository.EpisodeRepository;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -42,64 +44,33 @@ public class AnimeService {
             EpisodeEntity episode = new EpisodeEntity();
             episode.setAnime(anime);
             episode.setEpisodeNumber(i);
-            episode.setWatched(false);
+            episode.setWatched(0);
             episodeRepository.save(episode);
         }
         return "redirect:/anime";
     }
 
-    public String watching(@PathVariable(value = "id")Long id,@RequestParam int episodes, Model model) {
+    public String watching( @PathVariable(value = "id") Long id,
+            @RequestParam("episodeList") int[] episodeList, 
+       Model model) {
         AnimeEntity anime = animeRepository.findById(id).orElseThrow();
-        model.addAttribute("id", anime.getId());
-        anime.setWatchedEpisodes(anime.getWatchedEpisodes() + episodes);
-        animeRepository.save(anime);
-        return "animedetails";
+        List<EpisodeEntity> episodes = anime.getEpisodes();
+        for (int episode : episodeList) {
+            System.out.println(episodes.get(episode).toString());
+            
+        }
+        
+       
+        return "anime";
     }
 
     public String details(@PathVariable(value = "id") Long id, Model model) {
         AnimeEntity anime = animeRepository.findById(id).orElseThrow();
-        Episode[] animes = new Episode[anime.getAllEpisodes()];
-        for (int i = 0; i < anime.getAllEpisodes(); i++) {
-            if (i < anime.getWatchedEpisodes()) {
-                animes[i] = new Episode(++i, true, anime.getId());
-                --i;
-            } else {
-                animes[i] = new Episode(++i, false, anime.getId());
-                --i;
-            }
-        }
-        model.addAttribute("animes", animes);
+        List<EpisodeEntity> episodes = anime.getEpisodes();
+        model.addAttribute("episodes", episodes);
         return "animedetails";
     }
 
-    class Episode {
-        
-        Long id;
-        int number;
-        boolean watched;
-
-        public Episode(int number, boolean watched, Long id) {
-            this.id = id;
-            this.number = number;
-            this.watched = watched;
-        }
-
-        public int getNumber() {
-            return number;
-        }
-
-        public void setNumber(int number) {
-            this.number = number;
-        }
-
-        public boolean isWatched() {
-            return watched;
-        }
-
-        public void setWatched(boolean watched) {
-            this.watched = watched;
-        }
-
-    }
+   
 
 }

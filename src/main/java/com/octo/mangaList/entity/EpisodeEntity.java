@@ -22,7 +22,7 @@ public class EpisodeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private int episodeNumber;
-    private boolean watched;
+    private int watched;
 
     @ManyToOne
     @JoinColumn(name = "anime_id")
@@ -47,13 +47,15 @@ public class EpisodeEntity {
         this.episodeNumber = episodeNumber;
     }
 
-    public boolean isWatched() {
+    public int getWatched() {
         return watched;
     }
 
-    public void setWatched(boolean watched) {
+    public void setWatched(int watched) {
         this.watched = watched;
     }
+
+    
 
     public AnimeEntity getAnime() {
         return anime;

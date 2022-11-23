@@ -5,6 +5,7 @@
 package com.octo.mangaList.repository;
 
 import com.octo.mangaList.entity.EpisodeEntity;
+import com.octo.mangaList.entity.MangaEntity;
 import org.springframework.data.repository.CrudRepository;
 
 /**

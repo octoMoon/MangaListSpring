@@ -5,7 +5,9 @@
 package com.octo.mangaList.controller;
 
 import com.octo.mangaList.entity.AnimeEntity;
+import com.octo.mangaList.entity.EpisodeEntity;
 import com.octo.mangaList.service.AnimeService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,20 +36,23 @@ public class AnimeController {
 
     @GetMapping("/anime/{id}")
     public String details(@PathVariable(value = "id") Long id, Model model) {
-        animeService.details(id, model);      
+        animeService.details(id, model);
         return "animedetails";
     }
-    
+
     @PostMapping("/anime")
     public String addTitlePost(@RequestParam String title, @RequestParam int episodes, Model model) {
-        animeService.addTitle(title,episodes, model);
+        animeService.addTitle(title, episodes, model);
         return "redirect:/anime";
     }
-    
-     @PostMapping("/anime/{id}")
-    public String watching(@PathVariable(value = "id") Long id, @RequestParam int episodes, Model model) {
-        animeService.watching(id, episodes, model);
-        return "redirect:/anime/{id}";
+
+    @PostMapping("/anime/{id}")
+    public String watching(@PathVariable(value = "id") Long id,
+            @RequestParam("episodeList") int[] episodeList,
+          
+            Model model) {
+        animeService.watching(id,episodeList, model);
+        return "redirect:/anime";
     }
 
 }

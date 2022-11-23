@@ -12,5 +12,5 @@ import org.springframework.data.repository.CrudRepository;
  * @author vladmir
  */
 public interface MangaRepository extends CrudRepository<MangaEntity, Long>{
-    MangaEntity findByTitle(String title);
+
 }

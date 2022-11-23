@@ -32,6 +32,16 @@ public class AnimeEntity {
     public AnimeEntity() {
     }
 
+    public List<EpisodeEntity> getEpisodes() {
+        return episodes;
+    }
+
+    public void setEpisodes(List<EpisodeEntity> episodes) {
+        this.episodes = episodes;
+    }
+    
+    
+
     public Long getId() {
         return id;
     }

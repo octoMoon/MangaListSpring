@@ -12,17 +12,25 @@
         </head>
         <body>
             <header th:insert="blocks/header :: header"></header>
+
+        <div>
+    <form  th:action="'/anime/' + ${id}"  method="post">
+        <div class="form-group required-control">
             
-        <th:block th:each="anime : ${animes}">
-            <li>             
-                <input type="checkbox" th:text="${anime.number}  + ' Эпизод'" th:checked="${anime.watched}"/>
+            <th:block th:each="episode : ${episodes}">
+            <li>    
+                <input type="checkbox"
+                       name="episodeList"
+                       th:value="${episode.watched}"
+                       th:text="${episode.episodeNumber}  + ' Эпизод' + ${episode.id}" 
+                       th:checked="${episode.watched}"/>
             </li>
         </th:block>
-
-        <form th:action="'/anime/' + ${id}" method="post">
-            <input type="text" name="episodes" placeholder="Введите количество просмотреных эпизодов">
-            <button type="submit">Сохранить</button>
-        </form>
+       
+        </div>
+        <button type="submit">Save</button>
+    </form>
+</div>
 
     </body>
 </html>
