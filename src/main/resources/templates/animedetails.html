@@ -21,8 +21,8 @@
             <li>    
                 <input type="checkbox"
                        name="episodeList"
-                       th:value="${episode.watched}"
-                       th:text="${episode.episodeNumber}  + ' Эпизод' + ${episode.id}" 
+                       th:value="${episode.episodeNumber} +watched+ ${episode.watched}"
+                       th:text="${episode.episodeNumber}  + ' Эпизод'" 
                        th:checked="${episode.watched}"/>
             </li>
         </th:block>

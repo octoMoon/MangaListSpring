@@ -12,7 +12,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -51,16 +50,22 @@ public class AnimeService {
     }
 
     public String watching( @PathVariable(value = "id") Long id,
-            @RequestParam("episodeList") int[] episodeList, 
+            @RequestParam("episodeList") String[] episodeList, 
        Model model) {
         AnimeEntity anime = animeRepository.findById(id).orElseThrow();
         List<EpisodeEntity> episodes = anime.getEpisodes();
-        for (int episode : episodeList) {
-            System.out.println(episodes.get(episode).toString());
-            
+        anime.setWatchedEpisodes(0);
+        for(EpisodeEntity episode : episodes){
+        episode.setWatched(0);
         }
-        
-       
+        for (String episode : episodeList) {
+            System.out.println(episode);
+            String [] values = episode.split("watched");
+            episodes.get(Integer.parseInt(values[0])-1).setWatched(1);
+            anime.setWatchedEpisodes(anime.getWatchedEpisodes()+1);
+        }      
+       anime.setEpisodes(episodes);
+       animeRepository.save(anime);
         return "anime";
     }
 

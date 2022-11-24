@@ -48,7 +48,7 @@ public class AnimeController {
 
     @PostMapping("/anime/{id}")
     public String watching(@PathVariable(value = "id") Long id,
-            @RequestParam("episodeList") int[] episodeList,
+            @RequestParam("episodeList") String[] episodeList,
           
             Model model) {
         animeService.watching(id,episodeList, model);
