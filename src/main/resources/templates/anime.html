@@ -1,28 +1,27 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml">
     <!--
     Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
     Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
     -->
-    <html>
-        <head>
-            <title>Anime</title>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        </head>
-        <body>
-            <header th:insert="blocks/header :: header"></header>
-            <h1>Добавление Тайтла</h1>
-    <form action='/anime/' method="post">
-        <input type="text" name="title" placeholder="Введите тайтл">
-        <input type="text" name="episodes" placeholder="Введите количество эпизодов">
-        <button type="submit">Добавить тайтл</button>
-    </form>
-            <ul>
-                <th:block th:each="anime : ${animes}">
-                    <h1 th:text="${anime.title}  + ' Серий посмотренно ' + ${anime.watchedEpisodes}"/>
-                    <a th:href="@{/anime/{id}(id=${anime.id})}">Подробнее</a>
-                </th:block>
-            </ul>
-        </body>
-    </html>
+    <head>
+        <title>Anime</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <header th:insert="blocks/header :: header"></header>
+        <h1>Добавление Тайтла</h1>
+        <form action='/anime/' method="post">
+            <input type="text" name="title" placeholder="Введите тайтл">
+                <input type="text" name="episodes" placeholder="Введите количество эпизодов">
+                    <button type="submit">Добавить тайтл</button>
+                    </form>
+                    <ul>
+                        <th:block th:each="anime : ${animes}">
+                            <h1 th:text="${anime.title}  + ' Серий посмотренно ' + ${anime.watchedEpisodes}"/>
+                            <a th:href="@{/anime/{id}(id=${anime.id})}">Подробнее</a>
+                        </th:block>
+                    </ul>
+                    </body>
+                    </html>

@@ -19,7 +19,7 @@ import lombok.Data;
  */
 @Data
 @Entity
-public class UserEntity implements UserDetails {
+public class UserEntity implements UserDetails {    
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,8 +34,11 @@ public class UserEntity implements UserDetails {
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<RoleEntity> roles;
-   
-
+    
+    
+    public UserEntity() {
+    }
+    
     @Override
     public String getUsername() {
         return username;
